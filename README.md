@@ -11,9 +11,9 @@ This program implements the Biba integrity policy for a simple banking system
 
 - Windows:
 
-	To compile run the command 'g++ main.cpp -o bank'
+	To compile run the command `g++ main.cpp -o bank`
 
-	To execute run the command 'bank.exe instructions.txt'
+	To execute run the command `bank.exe instructions.txt`
 
 - Linux / Mac:
 
@@ -27,9 +27,9 @@ This program implements the Biba integrity policy for a simple banking system
 
 - Parameters:
 
-	int argc representing the number of arguments passed when executing the program
+	`int argc` representing the number of arguments passed when executing the program
 
-	char *argv[] an array of character pointers representing the arguments passed when executing the program
+	`char *argv[]` an array of character pointers representing the arguments passed when executing the program
 
 - Return:
 
