@@ -40,3 +40,44 @@ int count_instructions(char *argv[]){
 
 	return count;
 }
+
+// get each instruction from file
+vector<string> get_instructions(int num_instructions, char *argv[]){
+
+	ifstream reading;
+	reading.open(argv[1]);
+
+	vector<string> instructions;
+
+	// get each line from the command file and add to vector
+	for(int i=0; i< num_instructions; i++){
+		string words;
+		getline(reading, words);
+		instructions.push_back(words);
+	}
+
+	reading.close();
+
+	return instructions;
+}
+
+// get individual words from instructions
+vector<string> get_instruction_words(vector<string>& instructions){
+
+	// get first instruction
+	stringstream holder;
+	holder << instructions.front();
+
+	// get each word in instruction
+	vector<string> words;
+	while(!holder.eof()){
+		string temp;
+		holder >> temp;
+		words.push_back(temp);
+	}
+
+	// remove first instruction
+	instructions.erase(instructions.begin());
+
+	return words;
+}
