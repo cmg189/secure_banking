@@ -37,7 +37,7 @@ int count_instructions(char *argv[]){
 
 	reading.close();
 
-	return count;
+	return count -1;		// minus 1 removes the count of eof in file
 }
 
 // get each instruction from file
@@ -86,40 +86,47 @@ vector<instruction> make_objects(vector<string> instructions, int num_instructio
 	vector<instruction> objects;
 
 	// process each instruction
-	for(int i=0; i< num_instructions -1; i++){
+	for(int i=0; i< num_instructions; i++){
 
 		// get each word from instruction
 		vector<string> command = get_instruction_words(instructions);
 
 		// initalize struct based on words from instruction
 		switch( command.size() ){
+
+			// only instruction with one word is status
 			case 1:{
 				struct instruction one = {command.at(0), "none", "none", "none", false};
 				objects.push_back(one);
 				break;
 			}
 
+			// there will never be an instruction with only two words
 			case 2:{
 				struct instruction two = {command.at(0), command.at(1), "none", "none", false};
 				objects.push_back(two);
 				break;
 			}
 
+			// only instructions with 3 words have commands: addsub, addobj, and query
 			case 3:{
 				struct instruction three = {command.at(0), command.at(1), command.at(2), "none", false};
 				objects.push_back(three);
 				break;
-			}
+			} // case 3
 
+			// only instructions with 4 words have commands: withdraw and deposit
 			case 4:{
-				struct instruction three = {command.at(0), command.at(1), command.at(2), command.at(3), false};
-				objects.push_back(three);
+				struct instruction four = {command.at(0), command.at(1), command.at(2), command.at(3), false};
+				objects.push_back(four);
 				break;
 			}
 
-			default:
-				cout << "invalid command" << endl;
+			default:{
+				struct instruction five = {"none", "none", "none", "none", false};
+				objects.push_back(five);
 				break;
+			}
 		}
 
 	}
