@@ -91,39 +91,59 @@ vector<instruction> make_objects(vector<string> instructions, int num_instructio
 		// get each word from instruction
 		vector<string> command = get_instruction_words(instructions);
 
+
+
 		// initalize struct based on words from instruction
 		switch( command.size() ){
 
 			// only instruction with one word is status
 			case 1:{
-				struct instruction one = {command.at(0), "none", "none", "none", false};
+				struct instruction one = {command.at(0), "none", "none", "none", "none", false};
 				objects.push_back(one);
 				break;
 			}
 
 			// there will never be an instruction with only two words
 			case 2:{
-				struct instruction two = {command.at(0), command.at(1), "none", "none", false};
+				struct instruction two = {command.at(0), command.at(1), "none", "none", "none", false};
 				objects.push_back(two);
 				break;
 			}
 
 			// only instructions with 3 words have commands: addsub, addobj, and query
 			case 3:{
-				struct instruction three = {command.at(0), command.at(1), command.at(2), "none", false};
-				objects.push_back(three);
+
+				// convert string to char array for strcmp() to work
+				char temp_command[command[0].length() +1];
+				strcpy(temp_command, command[0].c_str());
+
+				// determine if first word is addsub, addobj or query
+				if( strcmp(temp_command, "ADDSUB") == 0 ){
+					struct instruction three = {command.at(0), command.at(1), "none", command.at(2), "none", false};
+					objects.push_back(three);
+
+				}else if( strcmp(temp_command, "ADDOBJ") == 0 ) {
+					struct instruction three = {command.at(0), "none", command.at(1), command.at(2), "none", false};
+					objects.push_back(three);
+				}else if( strcmp(temp_command, "QUERY") == 0 ){
+					struct instruction three = {command.at(0), command.at(1), command.at(2), "none" ,"none", false};
+					objects.push_back(three);
+
+				}
+
 				break;
+
 			} // case 3
 
 			// only instructions with 4 words have commands: withdraw and deposit
 			case 4:{
-				struct instruction four = {command.at(0), command.at(1), command.at(2), command.at(3), false};
+				struct instruction four = {command.at(0), command.at(1), command.at(2), "none", command.at(3), false};
 				objects.push_back(four);
 				break;
 			}
 
 			default:{
-				struct instruction five = {"none", "none", "none", "none", false};
+				struct instruction five = {"none", "none", "none", "none", "none", false};
 				objects.push_back(five);
 				break;
 			}
