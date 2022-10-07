@@ -1,13 +1,13 @@
-addsub mat0299 MEDIUM
-addobj acct001 MEDIUM
-addobj acct002 HIGH
-addobj acct003 LOW
-status
-deposit mat0299 acct001 40.00
-query mat0299 acct003
-query mat0299 acct002
-query mat0299 acct001
-withdraw mat0299 acct003 90.35
-withdraw mat0299 acct002 55.11
-deposit mat0299 acct002 invalid
-deposit mat0299 acct003 42.40
+ADDSUB mat0299 MEDIUM
+ADDOBJ acct001 MEDIUM
+ADDOBJ acct002 HIGH
+ADDOBJ acct003 LOW
+STATUS
+DEPOSIT mat0299 acct001 40.00
+QUERY mat0299 acct003
+QUERY mat0299 acct002
+QUERY mat0299 acct001
+WITHDRAW mat0299 acct003 90.35
+WITHDRAW mat0299 acct002 55.11
+DEPOSIT mat0299 acct002 invalid
+DEPOSIT mat0299 acct003 42.40
