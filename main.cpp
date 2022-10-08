@@ -23,11 +23,6 @@ int main(int argc, char *argv[]){
 	// create objects for each instruction and check format
 	vector<struct instruction> instruction_objects = make_objects(instructions, num_instructions);
 
-	for(int i=0; i< num_instructions; i++){
-		cout << instruction_objects[i].command << " " << instruction_objects[i].subject_name << " " << instruction_objects[i].object_name
-		<< " " << instruction_objects[i].level << " " << instruction_objects[i].amount << " " << instruction_objects[i].correct_format << endl;
-	}
-
 	// holds subjects and objects
 	Reference_monitor monitor;
 
@@ -38,7 +33,8 @@ int main(int argc, char *argv[]){
 	execute_commands(monitor, instruction_objects, num_instructions);
 
 	// output all information
-	monitor.print_status(instruction_objects);
+	monitor.print_status();
+	//monitor.print_status(instruction_objects);
 
 	cout << "\nProgram ended\n\n";
 	return 0;
