@@ -81,6 +81,188 @@ vector<string> get_instruction_words(vector<string>& instructions){
 	return words;
 }
 
+// returns true when command is formatted correctly, else returns false
+bool check_format(vector<string> command){
+
+	//bool flag = true;
+	string list_of_levels[3] = {"LOW", "MEDIUM", "HIGH"};
+	string list_of_commands[6] = { "ADDSUB", "ADDOBJ", "STATUS", "QUERY", "WITHDRAW", "DEPOSIT" };
+
+	switch( command.size() ){
+		// only instructions with 3 words have commands: addsub, addobj, and query
+		// must be in format: addsub/addobj subject/object level
+		//										query subject object
+		case 3: {
+			// convert to char[] for strcmp() to work
+			char first_word[command[0].length() +1];
+			strcpy(first_word, command[0].c_str());
+
+			char second_word[command[1].length() +1];
+			strcpy(second_word, command[1].c_str());
+
+			char last_word[command[2].length() +1];
+			strcpy(last_word, command[2].c_str());
+
+			// check query format
+			if( strcmp(first_word, "QUERY") == 0 ){
+
+				// check second word against all commands
+				for(int i=0; i< 6; i++){
+					char check_commands[list_of_commands[i].length()+1];
+					strcpy(check_commands, list_of_commands[i].c_str());
+
+					// if second word of instruction is a command, wrong format
+					if(strcmp(second_word, check_commands) == 0){ return false; }
+				}
+
+				// check second word against all levels
+				for(int i=0; i< 3; i++){
+					char check_levels[list_of_levels[i].length()+1];
+					strcpy(check_levels, list_of_levels[i].c_str());
+
+					// if second word of instruction is a security level, wrong format
+					if(strcmp(second_word, check_levels) == 0){ return false; }
+				} // for(i<3)
+
+				// check last word against all commands
+				for(int i=0; i< 6; i++){
+					char check_commands[list_of_commands[i].length()+1];
+					strcpy(check_commands, list_of_commands[i].c_str());
+
+					// if second word of instruction is a command, wrong format
+					if(strcmp(last_word, check_commands) == 0){ return false; }
+				}
+
+				// check last word against all levels
+				for(int i=0; i< 3; i++){
+					char check_levels[list_of_levels[i].length()+1];
+					strcpy(check_levels, list_of_levels[i].c_str());
+
+					// if second word of instruction is a security level, wrong format
+					if(strcmp(last_word, check_levels) == 0){ return false; }
+				} // for(i<3)
+
+				// query command in correct format
+				return true;
+
+			} // check query format
+
+			//
+			// checking command addsub/addobj
+			//
+
+			// check second word against all commands
+			for(int i=0; i< 6; i++){
+				char check_commands[list_of_commands[i].length()+1];
+				strcpy(check_commands, list_of_commands[i].c_str());
+
+				// if second word of instruction is a command, wrong format
+				if(strcmp(second_word, check_commands) == 0){ return false; }
+			}
+
+			// check second word against all levels
+			for(int i=0; i< 3; i++){
+				char check_levels[list_of_levels[i].length()+1];
+				strcpy(check_levels, list_of_levels[i].c_str());
+
+				// if second word of instruction is a security level, wrong format
+				if(strcmp(second_word, check_levels) == 0){ return false; }
+			} // for(i<3)
+
+			// check last word against all commands
+			for(int i=0; i< 6; i++){
+				char check_commands[list_of_commands[i].length()+1];
+				strcpy(check_commands, list_of_commands[i].c_str());
+
+				// if last word of instruction is a command, wrong format
+				if(strcmp(last_word, check_commands) == 0){ return false; }
+			} // for(i<6)
+
+			// instruction is in correct format
+			return true;
+			break;
+		} // case 3
+
+		//
+		// only instructions with 4 words have commands: withdraw and deposit
+		// must be in format: withdraw/deposit subject object float_value
+		//
+
+		case 4: {
+			// convert to char[] for strcmp() to work
+			char second_word[command[1].length() +1];
+			strcpy(second_word, command[1].c_str());
+
+			char third_word[command[2].length() +1];
+			strcpy(third_word, command[2].c_str());
+
+			char last_word[command[3].length() +1];
+			strcpy(last_word, command[3].c_str());
+
+			// check second word against all commands
+			for(int i=0; i< 6; i++){
+				char check_commands[list_of_commands[i].length()+1];
+				strcpy(check_commands, list_of_commands[i].c_str());
+
+				// if second word of instruction is a command, wrong format
+				if(strcmp(second_word, check_commands) == 0){ return false; }
+			} // for(i<6)
+
+			// check second word against all levels
+			for(int i=0; i< 3; i++){
+				char check_levels[list_of_levels[i].length()+1];
+				strcpy(check_levels, list_of_levels[i].c_str());
+
+				// if second word of instruction is a security level, wrong format
+				if(strcmp(second_word, check_levels) == 0){ return false; }
+			} // for(i<3)
+
+			//
+			// checking third word
+			//
+
+			// checking against all commands
+			for(int i=0; i< 6; i++){
+				char check_commands[list_of_commands[i].length()+1];
+				strcpy(check_commands, list_of_commands[i].c_str());
+
+				// if third word of instruction is a command, wrong format
+				if(strcmp(third_word, check_commands) == 0){ return false; }
+			} // for(i<6)
+
+			// checking against all levels
+			for(int i=0; i< 3; i++){
+				char check_levels[list_of_levels[i].length()+1];
+				strcpy(check_levels, list_of_levels[i].c_str());
+
+				// if third word of instruction is a security level, wrong format
+				if(strcmp(third_word, check_levels) == 0){ return false; }
+			} // for(i<3)
+
+			//
+			// checking last word
+			// last word must be float therefore, must contain a .
+			//
+
+			bool found_decimal = false;
+			for(int i=0; i< command[3].length() +1; i++){
+				if(last_word[i] == '.'){ found_decimal = true; }
+				if(found_decimal){ return true; }
+			}
+
+			// no decimal found in last word therefore, wrong format
+			return false;
+			break;
+		} // case 4
+
+		default:
+			break;
+	} // switch
+
+	// control should never reach here
+	return true;
+}
+
 // create objects for each instruction
 vector<instruction> make_objects(vector<string> instructions, int num_instructions){
 	vector<instruction> objects;
@@ -91,15 +273,25 @@ vector<instruction> make_objects(vector<string> instructions, int num_instructio
 		// get each word from instruction
 		vector<string> command = get_instruction_words(instructions);
 
-
-
 		// initalize struct based on words from instruction
 		switch( command.size() ){
 
 			// only instruction with one word is status
 			case 1:{
-				struct instruction one = {command.at(0), "none", "none", "none", "none", false};
-				objects.push_back(one);
+
+				// convert string to char array for strcmp() to work
+				char check_status[command[0].length() +1];
+				strcpy(check_status, command[0].c_str());
+
+				// set flag to false if command is not in correct format
+				if( strcmp(check_status, "STATUS") != 0 ){
+					struct instruction one = {command.at(0), "none", "none", "none", "none", false};
+					objects.push_back(one);
+				}else{
+					struct instruction one = {command.at(0), "none", "none", "none", "none", true};
+					objects.push_back(one);
+				}
+
 				break;
 			}
 
@@ -119,38 +311,70 @@ vector<instruction> make_objects(vector<string> instructions, int num_instructio
 
 				// determine if first word is addsub, addobj or query
 				if( strcmp(temp_command, "ADDSUB") == 0 ){
-					struct instruction three = {command.at(0), command.at(1), "none", command.at(2), "none", false};
-					objects.push_back(three);
+
+					// check format of command
+					bool formatted_correctly = check_format(command);
+
+					if(formatted_correctly){
+						struct instruction three = {command.at(0), command.at(1), "none", command.at(2), "none", true};
+						objects.push_back(three);
+					}else{
+						struct instruction three = {command.at(0), command.at(1), "none", command.at(2), "none", false};
+						objects.push_back(three);
+					}
 
 				}else if( strcmp(temp_command, "ADDOBJ") == 0 ) {
-					struct instruction three = {command.at(0), "none", command.at(1), command.at(2), "none", false};
-					objects.push_back(three);
+
+					// check format of command
+					bool formatted_correctly = check_format(command);
+
+					if(formatted_correctly){
+						struct instruction three = {command.at(0), "none", command.at(1), command.at(2), "none", true};
+						objects.push_back(three);
+					}else{
+						struct instruction three = {command.at(0), "none", command.at(1), command.at(2), "none", false};
+						objects.push_back(three);
+					}
+
 				}else if( strcmp(temp_command, "QUERY") == 0 ){
-					struct instruction three = {command.at(0), command.at(1), command.at(2), "none" ,"none", false};
-					objects.push_back(three);
 
+					// check format of command
+					bool formatted_correctly = check_format(command);
+
+					if(formatted_correctly){
+						struct instruction three = {command.at(0), command.at(1), command.at(2), "none" ,"none", true};
+						objects.push_back(three);
+					}else{
+						struct instruction three = {command.at(0), command.at(1), command.at(2), "none" ,"none", false};
+						objects.push_back(three);
+					}
 				}
-
 				break;
-
 			} // case 3
 
 			// only instructions with 4 words have commands: withdraw and deposit
 			case 4:{
-				struct instruction four = {command.at(0), command.at(1), command.at(2), "none", command.at(3), false};
-				objects.push_back(four);
+				// check format of command
+				bool formatted_correctly = check_format(command);
+
+				if(formatted_correctly){
+					struct instruction four = {command.at(0), command.at(1), command.at(2), "none", command.at(3), true};
+					objects.push_back(four);
+				}else{
+					struct instruction four = {command.at(0), command.at(1), command.at(2), "none", command.at(3), false};
+					objects.push_back(four);
+				}
 				break;
 			}
 
+			// there will never be an instruction with 5+ words
 			default:{
-				struct instruction five = {"none", "none", "none", "none", "none", false};
+				struct instruction five = {command.at(0), command.at(1), command.at(2), command.at(3), command.at(4), false};
 				objects.push_back(five);
 				break;
 			}
-		}
-
-	}
-
+		} // switch(command.size())
+	} // for(i< num_instructions)
 
 	return objects;
 }
@@ -180,11 +404,16 @@ void create_collection(Reference_monitor& monitor, vector<struct instruction> in
 			string new_level = instruction_objects[i].level;
 
 			monitor.add_object(new_account, new_level);
-			cout << "\nObject added: ADDOBJ " << new_account.get_name() << " " << new_level << endl; 
+			cout << "\nObject added: ADDOBJ " << new_account.get_name() << " " << new_level << endl;
 
 		}
 	}
 
 
+	return;
+}
+
+// begin executing all commands
+void execute_commands(Reference_monitor& monitor, vector<struct instruction> instruction_objects, int num_instructions){
 	return;
 }
