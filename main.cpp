@@ -1,8 +1,5 @@
 #include "headers.h"
 
-enum Security_levels{ LOW, MEDIUM, HIGH };
-const char* levels[] = {"LOW", "MEDIUM", "HIGH"};
-
 // initalize collection of objects and subjects
 void create_collection(Reference_monitor& monitor, vector<struct instruction> instruction_objects, int num_instructions);
 
@@ -34,7 +31,6 @@ int main(int argc, char *argv[]){
 
 	// output all information
 	monitor.print_status();
-	//monitor.print_status(instruction_objects);
 
 	cout << "\nProgram ended\n\n";
 	return 0;
