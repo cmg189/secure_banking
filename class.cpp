@@ -1,5 +1,8 @@
 #include "class.h"
 
+enum Security_levels{ LOW, MEDIUM, HIGH };
+const char* comparison_levels[] = {"LOW", "MEDIUM", "HIGH"};
+
 // constructor
 Bank_subject:: Bank_subject(string name){
 	this->name = name;
@@ -26,35 +29,6 @@ void Bank_object:: set_balance(float amount){ this->balance = amount; }
 
 // constructor
 Reference_monitor:: Reference_monitor(){ return; }
-
-// accessor
-void Reference_monitor:: add_subject(class Bank_subject person, string level){
-	// save person name and security level
-	pair<string, string> new_person(person.get_name(), level);
-	this->subject_collection.push_back(new_person);
-
-	// save person name and balance
-	subject_balance.push_back(person);
-
-	return;
-}
-
-// accessor
-void Reference_monitor:: add_object(class Bank_object account, string level){
-	// save account name and security level
-	pair<string, string> new_account(account.get_name(), level);
-	this->object_collection.push_back(new_account);
-
-	// save account name and balance
-	object_balance.push_back(account);
-	return;
-}
-
-// accessor
-vector< pair<string, string> > Reference_monitor:: get_subjects(){ return subject_collection; }
-
-// accessor
-vector< pair<string, string> > Reference_monitor:: get_objects(){ return object_collection; }
 
 // print status of system
 void Reference_monitor:: print_status(){
@@ -136,6 +110,46 @@ void Reference_monitor:: print_status(){
 	return;
 }
 
+// mutator
+void Reference_monitor:: add_subject(class Bank_subject person, string level){
+	// save person name and security level
+	pair<string, string> new_person(person.get_name(), level);
+	this->subject_collection.push_back(new_person);
 
+	// save person name and balance
+	subject_balance.push_back(person);
+
+	return;
+}
+
+// mutator
+void Reference_monitor:: add_object(class Bank_object account, string level){
+	// save account name and security level
+	pair<string, string> new_account(account.get_name(), level);
+	this->object_collection.push_back(new_account);
+
+	// save account name and balance
+	object_balance.push_back(account);
+	return;
+}
+
+// accessors
+vector< pair<string, string> > Reference_monitor:: get_subjects(){ return subject_collection; }
+vector< pair<string, string> > Reference_monitor:: get_objects(){ return object_collection; }
+
+// accessors
 vector<class Bank_subject> Reference_monitor:: get_subject_balance(){ return subject_balance; }
 vector<class Bank_object> Reference_monitor:: get_object_balance(){ return object_balance; }
+
+
+void Reference_monitor:: exe_query(){
+	return;
+}
+
+void Reference_monitor:: exe_deposit(){
+	return;
+}
+
+void Reference_monitor:: exe_withdraw(){
+	return;
+}
