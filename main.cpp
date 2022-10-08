@@ -6,6 +6,8 @@ const char* levels[] = {"LOW", "MEDIUM", "HIGH"};
 // initalize collection of objects and subjects
 void create_collection(Reference_monitor& monitor, vector<struct instruction> instruction_objects, int num_instructions);
 
+// executes all commands
+void execute_commands(Reference_monitor& monitor, vector<struct instruction> instruction_objects, int num_instructions);
 
 int main(int argc, char *argv[]){
 
@@ -21,27 +23,23 @@ int main(int argc, char *argv[]){
 	// create objects for each instruction and check format
 	vector<struct instruction> instruction_objects = make_objects(instructions, num_instructions);
 
+	for(int i=0; i< num_instructions; i++){
+		cout << instruction_objects[i].command << " " << instruction_objects[i].subject_name << " " << instruction_objects[i].object_name
+		<< " " << instruction_objects[i].level << " " << instruction_objects[i].amount << " " << instruction_objects[i].correct_format << endl;
+	}
+
 	// holds subjects and objects
 	Reference_monitor monitor;
 
 	// initalize collection of subjects and objects
 	create_collection(monitor, instruction_objects, num_instructions);
 
+	// begin executing all commands
+	execute_commands(monitor, instruction_objects, num_instructions);
+
 	// output all information
 	monitor.print_status(instruction_objects);
 
-	/*
-	vector< pair<string, string> > temp_subjects = monitor.get_subjects();
-	vector< pair<string, string> > temp_objects = monitor.get_objects();
-	for(int i=0; i< temp_subjects.size(); i++){
-		pair<string, string> temp_person = temp_subjects.at(i);
-		cout << temp_person.first << " has " << temp_person.second << endl;
-	}
-	for(int i=0; i< temp_objects.size(); i++){
-		pair<string, string> temp_account = temp_objects.at(i);
-		cout << temp_account.first << " has " << temp_account.second << endl;
-	}
-	*/
 	cout << "\nProgram ended\n\n";
 	return 0;
 }
