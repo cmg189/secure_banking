@@ -72,7 +72,12 @@ vector<string> get_instruction_words(vector<string>& instructions){
 	while(!holder.eof()){
 		string temp;
 		holder >> temp;
-		words.push_back(temp);
+
+		//	BUG FOUND HERE LINUX MACHINES ADD A NEWLINE TO END OF INSTRUCTION NOT NEEDED FOR WINDOWS BUT STILL WORKS
+		if( temp.size() != 0 ){
+			words.push_back(temp);
+		}
+		//words.push_back(temp);
 	}
 
 	// remove first instruction
@@ -264,7 +269,7 @@ bool check_format(vector<string> command){
 }
 
 // create objects for each instruction
-vector<instruction> make_objects(vector<string> instructions, int num_instructions){
+vector<struct instruction> make_objects(vector<string> instructions, int num_instructions){
 	vector<instruction> objects;
 
 	// process each instruction
@@ -425,15 +430,14 @@ void execute_commands(Reference_monitor& monitor, vector<struct instruction> ins
 			char command[instruction_objects[i].command.length() +1];
 			strcpy(command, instruction_objects[i].command.c_str());
 
-			// these subjects and objects were already added in create_collection()
-			// only outputting status that they were added
-			if(strcmp("ADDSUB", command) == 0){
-				cout << "\nSubject added: ADDSUB " << instruction_objects[i].subject_name << " " << instruction_objects[i].level << endl;
-			}else if(strcmp("ADDOBJ", command) == 0){
-				cout << "\nObject added: ADDOBJ " << instruction_objects[i].object_name << " " << instruction_objects[i].level << endl;
-			}else if(strcmp("STATUS", command) == 0){
-				monitor.print_status();
-			}
+			// subjects and objects were already added in create_collection() only outputting status that they were added
+
+			if(strcmp("ADDSUB", command) == 0){ cout << "\nSubject added: ADDSUB " << instruction_objects[i].subject_name << " " << instruction_objects[i].level << endl; }
+			else if(strcmp("ADDOBJ", command) == 0){ cout << "\nObject added: ADDOBJ " << instruction_objects[i].object_name << " " << instruction_objects[i].level << endl; }
+			else if(strcmp("STATUS", command) == 0){ monitor.print_status(); }
+			else if(strcmp("QUERY", command) == 0){ monitor.exe_query(); }
+			else if(strcmp("DEPOSIT", command) == 0){ monitor.exe_deposit(); }
+			else if(strcmp("WITHDRAW", command) == 0){ monitor.exe_withdraw(); }
 
 		}else{
 			cout << "\nBad instruction: ";
