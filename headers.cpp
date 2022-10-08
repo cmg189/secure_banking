@@ -385,35 +385,78 @@ void create_collection(Reference_monitor& monitor, vector<struct instruction> in
 	// add subjects and objects to reference monitor
 	for(int i=0; i< num_instructions; i++){
 
-		// convert string to char array for strcmp() to work
-		char command[instruction_objects[i].command.length() +1];
-		strcpy(command, instruction_objects[i].command.c_str());
+		// only for commands, addsub and addobj, that are formated correctly
+		if(instruction_objects[i].correct_format){
+			// convert string to char array for strcmp() to work
+			char command[instruction_objects[i].command.length() +1];
+			strcpy(command, instruction_objects[i].command.c_str());
 
-		// add new subject
-		if( strcmp("ADDSUB", command) == 0 ){
-			Bank_subject new_person(instruction_objects[i].subject_name);
-			string new_level = instruction_objects[i].level;
+			// add new subject
+			if( strcmp("ADDSUB", command) == 0 ){
+				Bank_subject new_person(instruction_objects[i].subject_name);
+				string new_level = instruction_objects[i].level;
+				// status is outputted in execute_commands()
+				monitor.add_subject(new_person, new_level);
 
-			monitor.add_subject(new_person, new_level);
-			cout << "\nSubject added: ADDSUB " << new_person.get_name() << " " << new_level << endl;
+			// add new object
+			}else if ( strcmp("ADDOBJ", command) == 0){
 
-		// add new object
-		}else if ( strcmp("ADDOBJ", command) == 0){
+				Bank_object new_account(instruction_objects[i].object_name);
+				string new_level = instruction_objects[i].level;
+				// status is outputted in execute_commands()
+				monitor.add_object(new_account, new_level);
 
-			Bank_object new_account(instruction_objects[i].object_name);
-			string new_level = instruction_objects[i].level;
-
-			monitor.add_object(new_account, new_level);
-			cout << "\nObject added: ADDOBJ " << new_account.get_name() << " " << new_level << endl;
-
-		}
-	}
-
+			} // else if
+		} // if
+	} // for
 
 	return;
 }
 
 // begin executing all commands
 void execute_commands(Reference_monitor& monitor, vector<struct instruction> instruction_objects, int num_instructions){
+
+	for(int i=0; i< num_instructions; i++){
+
+		// only execute commands that are formatted correctly
+		if(instruction_objects[i].correct_format){
+
+			// convert string to char array for strcmp() to work
+			char command[instruction_objects[i].command.length() +1];
+			strcpy(command, instruction_objects[i].command.c_str());
+
+			// these subjects and objects were already added in create_collection()
+			// only outputting status that they were added
+			if(strcmp("ADDSUB", command) == 0){
+				cout << "\nSubject added: ADDSUB " << instruction_objects[i].subject_name << " " << instruction_objects[i].level << endl;
+			}else if(strcmp("ADDOBJ", command) == 0){
+				cout << "\nObject added: ADDOBJ " << instruction_objects[i].object_name << " " << instruction_objects[i].level << endl;
+			}else if(strcmp("STATUS", command) == 0){
+				monitor.print_status();
+			}
+
+		}else{
+			cout << "\nBad instruction: ";
+			vector<string> words;
+			words.push_back(instruction_objects[i].command);
+			words.push_back(instruction_objects[i].subject_name);
+			words.push_back(instruction_objects[i].object_name);
+			words.push_back(instruction_objects[i].level);
+			words.push_back(instruction_objects[i].amount);
+
+			// output bad instruction
+			for(int i=0; i< words.size(); i++){
+				string temp = words.at(i);
+				char temp_converted[temp.length() +1];
+				strcpy(temp_converted, temp.c_str());
+
+				// dont output variables initalized as none
+				if( strcmp("none", temp_converted) != 0 ){ cout << words.at(i) << " "; }
+			} // for(i<words.size)
+			cout << endl;
+		} // else
+
+	} // for(i<num_instructions)
+
 	return;
 }
