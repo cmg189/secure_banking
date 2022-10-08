@@ -142,14 +142,107 @@ vector<class Bank_subject> Reference_monitor:: get_subject_balance(){ return sub
 vector<class Bank_object> Reference_monitor:: get_object_balance(){ return object_balance; }
 
 
-void Reference_monitor:: exe_query(){
+void Reference_monitor:: exe_query(struct instruction instruction_objects){
+
+	instruction command = instruction_objects;
+	float found_obj_balance;
+	string subject_temp = command.subject_name; //subject
+	string object_temp = command.object_name; // object
+	char original_object[object_temp.size()+1];
+	strcpy(original_object, object_temp.c_str());
+
+	char requesting_subject[subject_temp.length() +1];
+	strcpy(requesting_subject, subject_temp.c_str());
+
+	// match the subject making query request with its account in subject_balance
+	for(int i=0; i< subject_balance.size(); i++){
+
+		// required to get strcmp() to work
+		string temp = subject_balance[i].get_name();
+		char comparing_subject[temp.length() +1];
+		strcpy(comparing_subject, temp.c_str());
+
+		// found the subject making request in subject_collection
+		if( strcmp(requesting_subject, comparing_subject) == 0 ){
+
+			// save the subjects balance
+			float found_subject_balance = subject_balance[i].get_balance();
+
+			// find the subject in subject_collection to get their security levels
+			for(int j=0; j< subject_collection.size(); j++){
+
+				pair<string, string> temp_pair = subject_collection[i];
+				string first_pair = temp_pair.first;
+				char first_compare[first_pair.size() +1];
+				strcpy(first_compare, first_pair.c_str());
+
+				// found the subject and get their security level
+				if(strcmp(first_compare, requesting_subject) == 0){
+					string subject_compare_level = temp_pair.second;
+
+					// find the object in object_collection
+					for(int k=0; k< object_collection.size(); k++){
+						pair<string, string> object_pair = object_collection.at(k);
+
+						string first_object = object_pair.first;
+						char object_compare[first_object.length()+1];
+						strcpy(object_compare, first_object.c_str());
+
+						// matching the object passed into function with object in object_collection
+						if( strcmp(original_object, object_compare) == 0 ){
+
+							// match the object passed in function with object in balance_collection
+							for(int l=0; l< object_balance.size(); l++){
+								string comp_balance = object_balance[l].get_name();
+								char compare_balance[comp_balance.length()+1];
+								strcpy(compare_balance, comp_balance.c_str());
+
+								// save the found balance of the object
+								if( strcmp(compare_balance, original_object) == 0 ){
+									found_obj_balance = object_balance[l].get_balance();
+									//cout << "Found balance\n";
+									break;
+								}
+							}
+
+							// check their security levels
+							string obj_level = object_pair.second;
+							char lvl_cmp[obj_level.length() +1];
+							strcpy(lvl_cmp, obj_level.c_str());
+							// find the level in enum
+							for(int m=0; m< 3; m++){
+								if(strcmp(comparison_levels[m], lvl_cmp) == 0){
+									// no reading dowm
+									if( m < MEDIUM ){
+										cout << "Access denied: QUERY " << subject_temp << " " << object_temp << endl;
+									}else{
+										cout << "Access granted: " << subject_temp << " queries " << object_temp << endl;
+										// read balance from object into balance of subject
+										float new_balance = found_subject_balance + found_obj_balance;
+										subject_balance[i].set_balance(new_balance);
+									}
+									break;
+								}
+							}
+						}
+					}
+				}
+			}
+
+			break;
+		}else{
+			cout << "\nSubject: " << requesting_subject << " not found in system\n\n";
+			break;
+		}
+	}
+
 	return;
 }
 
-void Reference_monitor:: exe_deposit(){
+void Reference_monitor:: exe_deposit(struct instruction instruction_objects){
 	return;
 }
 
-void Reference_monitor:: exe_withdraw(){
+void Reference_monitor:: exe_withdraw(struct instruction instruction_objects){
 	return;
 }
