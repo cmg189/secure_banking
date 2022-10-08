@@ -57,7 +57,7 @@ vector< pair<string, string> > Reference_monitor:: get_subjects(){ return subjec
 vector< pair<string, string> > Reference_monitor:: get_objects(){ return object_collection; }
 
 // print status of system
-void Reference_monitor:: print_status(vector<struct instruction> instruction_objects){
+void Reference_monitor:: print_status(){
 	cout << fixed << setprecision(2);
 
 	cout << "\n*-----Current Status-----*\n";
