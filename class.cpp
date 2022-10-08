@@ -25,13 +25,27 @@ string Bank_object:: get_name(){ return name; }
 float Bank_object:: get_balance(){ return balance; }
 void Bank_object:: set_balance(float amount){ this->balance = amount; }
 
-void Reference_monitor:: add_subject(pair<class Bank_subject, string> person){
-	this->subject_collection.push_back(person);
+
+// constructor
+Reference_monitor:: Reference_monitor(){ return; }
+
+
+// accessor
+void Reference_monitor:: add_subject(class Bank_subject person, string level){
+	pair<string, string> new_person(person.get_name(), level);
+	this->subject_collection.push_back(new_person);
 	return;
 }
 
-void Reference_monitor:: add_object(pair<class Bank_object, string> account){
-	this->object_collection.push_back(account);
-
+// accessor
+void Reference_monitor:: add_object(class Bank_object account, string level){
+	pair<string, string> new_account(account.get_name(), level);
+	this->object_collection.push_back(new_account);
 	return;
 }
+
+// accessor
+vector< pair<string, string> > Reference_monitor:: get_subjects(){ return subject_collection; }
+
+// accessor
+vector< pair<string, string> > Reference_monitor:: get_objects(){ return object_collection; }

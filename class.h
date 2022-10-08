@@ -38,20 +38,24 @@ class Bank_object{
 		float balance;
 };
 
-
 class Reference_monitor{
 	public:
 		Reference_monitor();
 
-		void add_subject(pair<class Bank_subject, string> person);
-		void add_object(pair<class Bank_object, string> account);
+		void add_subject(class Bank_subject person, string level);
+		void add_object(class Bank_object acount, string level);
+
+		vector< pair<string, string> > get_subjects();
+		vector< pair<string, string> > get_objects();
 
 		void exe_query();
-
+		void exe_deposit();
+		void exe_withdraw();
+		void print_status();
 
 	private:
 
-		vector< pair<class Bank_subject, string> > subject_collection;
-		vector< pair<class Bank_object, string> > object_collection;
+		vector< pair<string, string> > subject_collection;
+		vector< pair<string, string> > object_collection;
 
 };
