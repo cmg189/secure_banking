@@ -54,9 +54,9 @@ class Reference_monitor{
 
 		void print_status();
 
-		void exe_query();
-		void exe_deposit();
-		void exe_withdraw();
+		void exe_query(struct instruction instruction_objects);
+		void exe_deposit(struct instruction instruction_objects);
+		void exe_withdraw(struct instruction instruction_objects);
 
 
 	private:
