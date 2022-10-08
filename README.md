@@ -27,7 +27,7 @@ This program implements the Biba integrity policy for a simple banking system
 - Description:
 
 	Checks if program is executed with a file specified
-	
+
 - Parameters:
 
 	`int argc` representing the number of arguments passed when executing the program
@@ -245,11 +245,11 @@ This program implements the Biba integrity policy for a simple banking system
 
 	`void print_status()` outputs current commands being executed and status of banking system
 
-	`void exe_query()` performs query command of subjects on objects
+	`void exe_query(struct instruction instruction_objects)` performs query command of subjects on objects
 
-	`void exe_deposit` performs deposit command of subjects on objects
+	`void exe_deposit(struct instruction instruction_objects)` performs deposit command of subjects on objects
 
-	`void exe_withdraw` performs withdraw command of subjects on objects
+	`void exe_withdraw(struct instruction instruction_objects)` performs withdraw command of subjects on objects
 
 ### Other
 
