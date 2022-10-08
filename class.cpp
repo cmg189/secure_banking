@@ -1,6 +1,5 @@
 #include "class.h"
 
-
 // constructor
 Bank_subject:: Bank_subject(string name){
 	this->name = name;
@@ -57,7 +56,7 @@ vector< pair<string, string> > Reference_monitor:: get_subjects(){ return subjec
 // accessor
 vector< pair<string, string> > Reference_monitor:: get_objects(){ return object_collection; }
 
-
+// print status of system
 void Reference_monitor:: print_status(vector<struct instruction> instruction_objects){
 	cout << fixed << setprecision(2);
 
