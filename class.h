@@ -4,6 +4,7 @@
 #include <vector>
 #include <cstring>
 #include <utility>
+#include <iomanip>
 using namespace std;
 
 struct instruction{
@@ -48,14 +49,23 @@ class Reference_monitor{
 		vector< pair<string, string> > get_subjects();
 		vector< pair<string, string> > get_objects();
 
+		vector<class Bank_subject> get_subject_balance();
+		vector<class Bank_object> get_object_balance();
+
+
+		void print_status(vector<struct instruction> instruction_objects);
+
 		void exe_query();
 		void exe_deposit();
 		void exe_withdraw();
-		void print_status();
+
 
 	private:
 
 		vector< pair<string, string> > subject_collection;
 		vector< pair<string, string> > object_collection;
+
+		vector<class Bank_subject> subject_balance;
+		vector<class Bank_object> object_balance;
 
 };
