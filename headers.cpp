@@ -154,3 +154,37 @@ vector<instruction> make_objects(vector<string> instructions, int num_instructio
 
 	return objects;
 }
+
+// initalize collection of objects and subjects
+void create_collection(Reference_monitor& monitor, vector<struct instruction> instruction_objects, int num_instructions){
+
+	// add subjects and objects to reference monitor
+	for(int i=0; i< num_instructions; i++){
+
+		// convert string to char array for strcmp() to work
+		char command[instruction_objects[i].command.length() +1];
+		strcpy(command, instruction_objects[i].command.c_str());
+
+		// add new subject
+		if( strcmp("ADDSUB", command) == 0 ){
+			Bank_subject new_person(instruction_objects[i].subject_name);
+			string new_level = instruction_objects[i].level;
+
+			monitor.add_subject(new_person, new_level);
+			cout << "\nSubject added: ADDSUB " << new_person.get_name() << " " << new_level << endl;
+
+		// add new object
+		}else if ( strcmp("ADDOBJ", command) == 0){
+
+			Bank_object new_account(instruction_objects[i].object_name);
+			string new_level = instruction_objects[i].level;
+
+			monitor.add_object(new_account, new_level);
+			cout << "\nObject added: ADDOBJ " << new_account.get_name() << " " << new_level << endl; 
+
+		}
+	}
+
+
+	return;
+}
