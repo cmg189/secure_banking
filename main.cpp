@@ -30,7 +30,7 @@ int main(int argc, char *argv[]){
 	execute_commands(monitor, instruction_objects, num_instructions);
 
 	// output all information
-	monitor.print_status();
+	monitor.print_status(" Final State ");
 
 	cout << "\nProgram ended\n\n";
 	return 0;

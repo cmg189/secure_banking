@@ -52,7 +52,7 @@ class Reference_monitor{
 		vector<class Bank_subject> get_subject_balance();
 		vector<class Bank_object> get_object_balance();
 
-		void print_status();
+		void print_status(string state);
 
 		void exe_query(struct instruction instruction_objects);
 		void exe_deposit(struct instruction instruction_objects);

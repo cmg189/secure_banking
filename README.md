@@ -13,13 +13,13 @@ This program implements the Biba integrity policy for a simple banking system
 
 	To compile run the command `g++ *.cpp -o bank`
 
-	To execute run the command `bank.exe instructions.txt`
+	To execute run the command `bank.exe commands.txt`
 
 - Linux / Mac:
 
 	To compile run the command `g++ *.cpp -o bank`
 
-	To execute run the command `./bank instructions.txt`
+	To execute run the command `./bank commands.txt`
 
 ### Function Headers
 
@@ -243,7 +243,7 @@ This program implements the Biba integrity policy for a simple banking system
 
 	`vector<class Bank_object> get_object_balance()` accessor to private member variable object_balance
 
-	`void print_status()` outputs current commands being executed and status of banking system
+	`void print_status(string state)` outputs current commands being executed and state (current or final) of banking system
 
 	`void exe_query(struct instruction instruction_objects)` performs query command of subjects on objects
 

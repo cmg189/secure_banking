@@ -420,7 +420,7 @@ void create_collection(Reference_monitor& monitor, vector<struct instruction> in
 
 // begin executing all commands
 void execute_commands(Reference_monitor& monitor, vector<struct instruction> instruction_objects, int num_instructions){
-
+	cout << endl;
 	for(int i=0; i< num_instructions; i++){
 
 		// only execute commands that are formatted correctly
@@ -432,15 +432,15 @@ void execute_commands(Reference_monitor& monitor, vector<struct instruction> ins
 
 			// subjects and objects were already added in create_collection() only outputting status that they were added
 
-			if(strcmp("ADDSUB", command) == 0){ cout << "\nSubject added: ADDSUB " << instruction_objects[i].subject_name << " " << instruction_objects[i].level << endl; }
-			else if(strcmp("ADDOBJ", command) == 0){ cout << "\nObject added: ADDOBJ " << instruction_objects[i].object_name << " " << instruction_objects[i].level << endl; }
-			else if(strcmp("STATUS", command) == 0){ monitor.print_status(); }
+			if(strcmp("ADDSUB", command) == 0){ cout << "Subject added: ADDSUB " << instruction_objects[i].subject_name << " " << instruction_objects[i].level << endl; }
+			else if(strcmp("ADDOBJ", command) == 0){ cout << "Object added: ADDOBJ " << instruction_objects[i].object_name << " " << instruction_objects[i].level << endl; }
+			else if(strcmp("STATUS", command) == 0){ monitor.print_status(" Current State "); }
 			else if(strcmp("QUERY", command) == 0){ monitor.exe_query(instruction_objects[i]); }
 			else if(strcmp("DEPOSIT", command) == 0){ monitor.exe_deposit(instruction_objects[i]); }
 			else if(strcmp("WITHDRAW", command) == 0){ monitor.exe_withdraw(instruction_objects[i]); }
 
 		}else{
-			cout << "\nBad instruction: ";
+			cout << "Bad instruction: ";
 			vector<string> words;
 			words.push_back(instruction_objects[i].command);
 			words.push_back(instruction_objects[i].subject_name);
