@@ -75,9 +75,8 @@ This program receives input from a file containing commands such as:
 	`char *argv[]` an array of character pointers representing the arguments passed when executing the program
 
 -Return:
-
 	`int` representing the number of instructions in file
-
+	
 ---
 
 `vector<string> get_instructions(int num_instructions, char *argv[])`
@@ -144,7 +143,7 @@ This program receives input from a file containing commands such as:
 
 - Return:
 
-	vector<struct instruction> collection of structs representing fields as described above
+	`vector<struct instruction>` collection of structs representing fields as described above
 
 ---
 
@@ -170,7 +169,9 @@ This program receives input from a file containing commands such as:
 
 `void execute_commands(Reference_monitor& monitor, vector<struct instruction> instruction_objects, int num_instructions)`
 
-- Description: Executes all commands on appropriate subjects and objects, dependent on their security level and the Biba integrity policy
+- Description:
+
+	Executes all commands on appropriate subjects and objects, dependent on their security level and the Biba integrity policy
 
 - Parameters:
 
