@@ -69,9 +69,11 @@ This program receives input from a file containing commands such as:
 - Description:
 
 	Counts number of instructions found in file when executed
+
 -Parameters:
 
 	`char *argv[]` an array of character pointers representing the arguments passed when executing the program
+
 -Return:
 
 	`int` representing the number of instructions in file
@@ -160,7 +162,7 @@ This program receives input from a file containing commands such as:
 
 	`int num_instructions` represents the number of instructions found in file
 
-- Return
+- Return:
 
 	None
 
@@ -296,4 +298,6 @@ This program receives input from a file containing commands such as:
 
 ### Other
 
-`enum Security_levels` datatype representing the levels of security in the banking system being: Low, Medium, and High
+`enum Security_levels`
+
+Datatype representing the levels of security in the banking system being: Low, Medium, and High
