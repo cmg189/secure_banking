@@ -178,7 +178,7 @@ void Reference_monitor:: exe_query(struct instruction instruction_objects){
 				char first_compare[first_pair.size() +1];
 				strcpy(first_compare, first_pair.c_str());
 
-				// found the subject and get their security level
+				// find the subject and get their security level
 				if(strcmp(first_compare, requesting_subject) == 0){
 					string subject_compare_level = temp_pair.second;
 
@@ -216,10 +216,12 @@ void Reference_monitor:: exe_query(struct instruction instruction_objects){
 									// no reading dowm
 									if( m < MEDIUM ){
 										cout << "Access denied: query " << subject_temp << " " << object_temp << endl;
+										return;
 									}else{
 										// read balance from object into balance of subject
 										cout << "Access granted: " << subject_temp << " queries " << object_temp << endl;
 										subject_balance[i].set_balance(found_obj_balance);
+										return;
 									}
 									break;
 								}
@@ -228,14 +230,11 @@ void Reference_monitor:: exe_query(struct instruction instruction_objects){
 					}
 				}
 			}
-
-			break;
-		}else{
-			cout << "\nSubject: " << requesting_subject << " not found in system\n\n";
 			break;
 		}
 	}
-
+	// when the subject is not found in system
+	cout << "Bad instruction: query " << subject_temp << " " << object_temp << endl;
 	return;
 }
 
@@ -319,9 +318,10 @@ void Reference_monitor:: exe_deposit(struct instruction instruction_objects){
 										// write balance from object into balance of subject
 										cout << "Access granted: " << subject_temp << " deposits $" << deposit_amount << " to " << object_temp << endl;
 										object_balance[object_position].set_balance(deposit_amount + found_obj_balance);
-
+										return;
 									}else{
 										cout << "Access denied: deposit " << subject_temp << " " << object_temp << " $" << deposit_amount << endl;
+										return;
 									}
 									break;
 								}
@@ -330,15 +330,14 @@ void Reference_monitor:: exe_deposit(struct instruction instruction_objects){
 					}
 				}
 			}
-
-			break;
-		}else{
-			cout << "\nSubject: " << requesting_subject << " not found in system\n\n";
-			break;
+			// when the object is not found in system
+			cout << "Bad instruction: deposit " << subject_temp << " " << object_temp << " " << deposit_amount << endl;
+			return;
 		}
 	}
 
-
+	// when the subject is not found in system
+	cout << "Bad instruction: deposit " << subject_temp << " " << object_temp << " " << deposit_amount << endl;
 	return;
 }
 
@@ -421,9 +420,10 @@ void Reference_monitor:: exe_withdraw(struct instruction instruction_objects){
 										// write balance from object into balance of subject
 										cout << "Access granted: " << subject_temp << " withdraws $" << withdraw_amount << " from " << object_temp << endl;
 										object_balance[object_position].set_balance(found_obj_balance - withdraw_amount);
-
+										return;
 									}else{
 										cout << "Access denied: withdraw " << subject_temp << " " << object_temp << " $" << withdraw_amount << endl;
+										return;
 									}
 									break;
 								}
@@ -432,12 +432,10 @@ void Reference_monitor:: exe_withdraw(struct instruction instruction_objects){
 					}
 				}
 			}
-
-			break;
-		}else{
-			cout << "\nSubject: " << requesting_subject << " not found in system\n\n";
-			break;
 		}
 	}
+
+	// when the subject is not found in system
+	cout << "Bad instruction: withdraw " << subject_temp << " " << object_temp << " " << command.amount << endl;
 	return;
 }
