@@ -30,7 +30,7 @@ This program receives input from a file containing commands such as:
 
 ### Program Output
 
-<img src="example_output.PNG" width="300" height="300">
+<img src="example_output.PNG" width="450" height="400">
 
 ### Compile and Execute
 
