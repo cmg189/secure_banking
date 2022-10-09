@@ -70,13 +70,14 @@ This program receives input from a file containing commands such as:
 
 	Counts number of instructions found in file when executed
 
--Parameters:
+- Parameters:
 
 	`char *argv[]` an array of character pointers representing the arguments passed when executing the program
 
--Return:
+- Return:
+
 	`int` representing the number of instructions in file
-	
+
 ---
 
 `vector<string> get_instructions(int num_instructions, char *argv[])`
