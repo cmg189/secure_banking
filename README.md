@@ -1,11 +1,36 @@
 
 ## Secure Banking System
 
-This is a secure banking system based on the Biba integrity policy
+This program implements a secure banking system based on the Biba integrity model.
 
 ### Description
 
-This program implements the Biba integrity policy for a simple banking system
+The Biba integrity model is set of access control rules focused on data security.  
+The goal of the model is to prevent the contamination high level entities from low level entities.  
+Subjects and objects are ordered by integrity levels such as low, medium, and high.
+
+Two central rules that this model follows are:
+
+1. Integrity Star Property
+
+	Write access focused, this rule can be thought of as "No write up" meaning subjects with lower integrity levels cannot modify objects with higher integrity levels.
+
+2. Simple Integrity Condition
+
+	Read access focused, this rule can be thought of as "No read down" meaning subjects with higher integrity levels cannot read objects with lower integrity levels.
+
+This program receives input from a file containing commands such as:
+
+- ADDSUB add subjects (people) to the baking system
+- ADDOBJ add objects (accounts) to the banking system
+- DEPOSIT enables a subject to deposit money into an object
+- WITHDRAW enables a subject to withdraw money from an object
+- QUERY enables a subject to read the balance of an object
+- STATUS outputs all subjects and objects in the banking system
+
+### Program Output
+
+<img src="example_output.PNG" width="300" height="300">
 
 ### Compile and Execute
 
@@ -38,6 +63,8 @@ This program implements the Biba integrity policy for a simple banking system
 
 	None
 
+---
+
 `int count_instructions(char *argv[])`
 - Description:
 
@@ -48,6 +75,8 @@ This program implements the Biba integrity policy for a simple banking system
 -Return:
 
 	`int` representing the number of instructions in file
+
+---
 
 `vector<string> get_instructions(int num_instructions, char *argv[])`
 
@@ -65,6 +94,8 @@ This program implements the Biba integrity policy for a simple banking system
 
 	`vector<string>` represents the collection of instructions found in file
 
+---
+
 `vector<string> get_instruction_words(vector<string>& instructions)`
 
 - Description:
@@ -79,6 +110,8 @@ This program implements the Biba integrity policy for a simple banking system
 
 	`vector<string>` holds each word from file
 
+---
+
 `bool check_format(vector<string> command)`
 
 - Description:
@@ -92,6 +125,8 @@ This program implements the Biba integrity policy for a simple banking system
 - Return:
 
 	`bool` True if instruction is in correct format, False if format is incorrect
+
+---
 
 `vector<struct instruction> make_objects(vector<string> instructions, int num_instructions)`
 
@@ -108,6 +143,8 @@ This program implements the Biba integrity policy for a simple banking system
 - Return:
 
 	vector<struct instruction> collection of structs representing fields as described above
+
+---
 
 `void create_collection(Reference_monitor& monitor, vector<struct instruction> instruction_objects, int num_instructions)`
 
@@ -126,6 +163,8 @@ This program implements the Biba integrity policy for a simple banking system
 - Return
 
 	None
+
+---
 
 `void execute_commands(Reference_monitor& monitor, vector<struct instruction> instruction_objects, int num_instructions)`
 
@@ -189,6 +228,8 @@ This program implements the Biba integrity policy for a simple banking system
 
 	`void set_balance(float amount)` mutator of private member variable `float balance`
 
+---
+
 `Bank_object`
 
 - Description:
@@ -210,6 +251,8 @@ This program implements the Biba integrity policy for a simple banking system
 	`float get_balance()` accessor to private member variable `float balance`
 
 	`void set_balance(float amount)` mutator of private member variable `float balance`
+
+---
 
 `Reference_monitor`
 
