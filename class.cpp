@@ -31,11 +31,13 @@ void Bank_object:: set_balance(float amount){ this->balance = amount; }
 Reference_monitor:: Reference_monitor(){ return; }
 
 // print status of system
-void Reference_monitor:: print_status(){
+void Reference_monitor:: print_status(string state){
 	cout << fixed << setprecision(2);
 
-	cout << "\n*-----Current Status-----*\n";
-	cout << "Subject | Level | Balance\n";
+	if(state == " Final State "){ cout << endl << "*" << setfill('-') << setw(8) << "-" << state << setfill('-') << setw(10) << "*\n"; }
+	else{ cout << endl << "*" << setfill('-') << setw(8) << "-" << state << setfill('-') << setw(8) << "*\n"; }
+
+	cout << "|-Subject-|--Level--|-Balance-|\n";
 
 	for(int i=0; i< subject_collection.size(); i++){
 		// since subjects name and levels are in one vector
@@ -65,14 +67,12 @@ void Reference_monitor:: print_status(){
 				break;
 			}
 		}
-
-
-
-		cout << temp_subject.first << " " << temp_subject.second << " " << sub_balance << endl;
+		// output subject name, level and current balance
+		cout << "| " << temp_subject.first << " | " << temp_subject.second << setfill(' ') << setw(2) << " " << "| " << sub_balance  << endl;
 	}
 
 
-	cout << "Object | Level | Balance\n";
+	cout << "|-Object--|--Level--|-Balance-|\n";
 	for(int i=0; i< object_collection.size(); i++){
 
 		// since objects name and levels are in one vector
@@ -102,11 +102,16 @@ void Reference_monitor:: print_status(){
 				break;
 			}
 		}
-
-
-		cout << temp_object.first << " " << temp_object.second << " " << obj_balance << endl;
+		// output objects name, level and current balance
+		if(temp_object.second == "HIGH"){
+			cout << "| " << temp_object.first << " | "  << temp_object.second << setfill(' ') << setw(4) << " " << "| " << obj_balance << endl;
+		}else if(temp_object.second == "LOW"){
+			cout << "| " << temp_object.first << " | " << temp_object.second << setfill(' ') << setw(5) << " " << "| " << obj_balance << endl;
+		}else{
+			cout << "| " << temp_object.first << " | "  << temp_object.second << setfill(' ') << setw(2) << " " << "| " << obj_balance << endl;
+		}
 	}
-
+	cout << "*-----------------------------*\n\n";
 	return;
 }
 
@@ -165,9 +170,6 @@ void Reference_monitor:: exe_query(struct instruction instruction_objects){
 		// found the subject making request in subject_collection
 		if( strcmp(requesting_subject, comparing_subject) == 0 ){
 
-			// save the subjects balance (not needed for qeury)
-			//float found_subject_balance = subject_balance[i].get_balance();
-
 			// find the subject in subject_collection to get their security levels
 			for(int j=0; j< subject_collection.size(); j++){
 
@@ -200,7 +202,6 @@ void Reference_monitor:: exe_query(struct instruction instruction_objects){
 								// save the found balance of the object
 								if( strcmp(compare_balance, original_object) == 0 ){
 									found_obj_balance = object_balance[l].get_balance();
-									//cout << "Found balance\n";
 									break;
 								}
 							}
@@ -214,11 +215,10 @@ void Reference_monitor:: exe_query(struct instruction instruction_objects){
 								if(strcmp(comparison_levels[m], lvl_cmp) == 0){
 									// no reading dowm
 									if( m < MEDIUM ){
-										cout << "Access denied: QUERY " << subject_temp << " " << object_temp << endl;
+										cout << "Access denied: query " << subject_temp << " " << object_temp << endl;
 									}else{
-										cout << "Access granted: " << subject_temp << " queries " << object_temp << endl;
 										// read balance from object into balance of subject
-
+										cout << "Access granted: " << subject_temp << " queries " << object_temp << endl;
 										subject_balance[i].set_balance(found_obj_balance);
 									}
 									break;
